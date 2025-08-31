@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infográfico da Campanha: Bate-e-Volta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Energetic & Playful -->
+    <!-- Application Structure Plan: The infographic follows a clear narrative path. It starts with the core problem (the routine) and immediately presents the solution (Bate-e-Volta). It then breaks down the campaign into its core components: the message, the media used, and the products offered, using a mix of text and charts. It concludes with a clear call to action. This top-down structure was chosen to guide the user from the high-level concept to the specific details in a logical and easy-to-digest flow. -->
+    <!-- Visualization & Content Choices: 
+    - Campaign Slogan -> Inform -> Large, bold text -> Justification: Immediately establishes the campaign's core message as the hero element. -> Method: HTML/Tailwind.
+    - Media Channels -> Organize -> Styled Cards -> Justification: Clearly segments the different advertising materials (Video, Outdoor, Email) for easy comparison. -> Method: HTML/Tailwind (NO SVG).
+    - Package Popularity -> Compare -> Horizontal Bar Chart -> Justification: Visually compares the appeal of the three initial travel packages based on projected market interest. -> Library: Chart.js (Canvas).
+    - Core Message Breakdown -> Compare -> Donut Chart -> Justification: Shows the strategic composition of the campaign's messaging, highlighting the focus on emotional connection over pure logistics. -> Library: Chart.js (Canvas).
+    - Call to Action -> Inform -> Styled Button -> Justification: Creates a clear, final directive for the user, mirroring the campaign's own CTA. -> Method: HTML/Tailwind. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; 
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+
+        <header class="text-center my-12">
+            <h1 class="text-4xl md:text-6xl font-bold text-[#073B4C] leading-tight">Fugir da Rotina?</h1>
+            <p class="mt-4 text-2xl md:text-3xl font-semibold text-[#118AB2]">Bate-e-Volta: O dia que muda a sua semana.</p>
+            <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+                Analisamos a estratégia de comunicação da nossa nova linha de produtos 'Bate-e-Volta'. Este infográfico resume os principais pilares da campanha, desde a mensagem central até os canais de divulgação e os pacotes oferecidos.
+            </p>
+        </header>
+
+        <section class="my-16">
+            <h2 class="text-3xl font-bold text-center text-[#073B4C] mb-8">Nossos Canais de Divulgação</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-[#FF6B6B]">
+                    <h3 class="text-2xl font-bold mb-2 text-[#073B4C]">🎬 Vídeo</h3>
+                    <p class="text-gray-600">Com um roteiro dinâmico, o vídeo para YouTube e TikTok contrasta o tédio da rotina com a vibração de uma viagem, incentivando a ação com a mensagem:</p>
+                    <p class="mt-4 font-semibold text-center text-lg italic text-[#118AB2]">"Liberte-se! Explore, sinta, viva. Tudo em um dia."</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-[#FFD166]">
+                    <h3 class="text-2xl font-bold mb-2 text-[#073B4C]">🏞️ Outdoor</h3>
+                    <p class="text-gray-600">Posicionado em locais estratégicos, o outdoor faz uma pergunta direta e oferece a solução, focando na praticidade e no custo-benefício:</p>
+                    <p class="mt-4 font-semibold text-center text-lg italic text-[#118AB2]">"Escapadas de fim de semana que cabem no seu bolso e na sua agenda."</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-[#06D6A0]">
+                    <h3 class="text-2xl font-bold mb-2 text-[#073B4C]">✉️ E-mail</h3>
+                    <p class="text-gray-600">A campanha de e-mail marketing fala diretamente com o cliente, validando seu cansaço e apresentando os pacotes como a "pausa que você merece":</p>
+                     <p class="mt-4 font-semibold text-center text-lg italic text-[#118AB2]">"Relaxe e recarregue as energias, sem precisar de muito tempo ou planejamento."</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="grid md:grid-cols-2 gap-16 my-16 items-center">
+            <section>
+                <h2 class="text-3xl font-bold text-center text-[#073B4C] mb-8">Foco da Nossa Mensagem</h2>
+                <p class="text-center text-gray-600 mb-6 max-w-md mx-auto">A estratégia de comunicação é focada em criar uma conexão emocional. A maior parte da nossa mensagem apela ao desejo de liberdade e novas experiências, enquanto a praticidade e o custo-benefício são apresentados como facilitadores.</p>
+                <div class="chart-container" style="max-width: 400px; height: 300px;">
+                    <canvas id="messageFocusChart"></canvas>
+                </div>
+            </section>
+            
+            <section>
+                <h2 class="text-3xl font-bold text-center text-[#073B4C] mb-8">Atratividade dos Pacotes</h2>
+                <p class="text-center text-gray-600 mb-6 max-w-md mx-auto">Com base em tendências de mercado, projetamos a atratividade inicial de cada pacote. A busca por experiências gastronômicas lidera, seguida de perto pelo apelo de um refúgio na natureza e pelo interesse em atividades culturais.</p>
+                <div class="chart-container">
+                    <canvas id="packagesChart"></canvas>
+                </div>
+            </section>
+        </div>
+        
+        <footer class="text-center my-12">
+            <h2 class="text-3xl font-bold text-[#073B4C] mb-4">Pronto para a sua próxima escapada?</h2>
+            <p class="text-gray-600 max-w-xl mx-auto mb-8">Nossa campanha integrada foi desenhada para inspirar e facilitar a decisão. A aventura está a apenas um clique de distância.</p>
+            <a href="#_" class="inline-block bg-[#118AB2] text-white font-bold py-4 px-10 rounded-lg shadow-lg hover:bg-[#073B4C] transition-colors text-xl">
+                Descubra os Próximos Destinos
+            </a>
+        </footer>
+
+    </div>
+
+    <script>
+        const messageFocusData = {
+            labels: ['Emoção & Inspiração', 'Praticidade', 'Custo-Benefício'],
+            datasets: [{
+                label: 'Foco da Mensagem',
+                data: [55, 30, 15],
+                backgroundColor: [
+                    '#FF6B6B',
+                    '#FFD166',
+                    '#06D6A0'
+                ],
+                borderColor: '#f8fafc',
+                borderWidth: 4,
+                hoverOffset: 4
+            }]
+        };
+
+        const packagesData = {
+            labels: ['Bate-e-Volta Gastronômico', 'Bate-e-Volta para a Serra', 'Bate-e-Volta Histórico'],
+            datasets: [{
+                label: 'Índice de Atratividade Inicial',
+                data: [88, 82, 75],
+                backgroundColor: [
+                    '#118AB2',
+                    '#06D6A0',
+                    '#FFD166'
+                ],
+                borderColor: [
+                    '#118AB2',
+                    '#06D6A0',
+                    '#FFD166'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        window.onload = function() {
+            const messageCtx = document.getElementById('messageFocusChart').getContext('2d');
+            new Chart(messageCtx, {
+                type: 'doughnut',
+                data: messageFocusData,
+                options: chartOptions
+            });
+
+            const packagesCtx = document.getElementById('packagesChart').getContext('2d');
+            new Chart(packagesCtx, {
+                type: 'bar',
+                data: packagesData,
+                options: {
+                    ...chartOptions,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                           display: false
+                        },
+                        tooltip: chartOptions.plugins.tooltip
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>
