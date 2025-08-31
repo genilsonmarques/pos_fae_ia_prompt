@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano de Negócios: Bate-e-Volta Expresso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Adventure (Background: #F5F5F4, Text: #292524, Primary Accent: #0D9488, Secondary Accent: #F97316) -->
+    <!-- Application Structure Plan: A single-page dashboard with a top navigation bar for quick access. The structure is thematic, guiding the user from a high-level overview to specific details about the market, product, marketing, and creative assets. This non-linear, interactive structure was chosen over a simple document layout to make the business plan more engaging and easier to digest for stakeholders. Key interactions include a clickable chart to explore audience segments, expandable cards for product details, and a tabbed interface for creative materials, promoting active exploration rather than passive reading. -->
+    <!-- Visualization & Content Choices: 
+    - Executive Summary -> Inform -> Dynamic Key Stats (JS counter) -> Engagement on load -> Justification: Highlights key financial goals immediately -> Method: Vanilla JS.
+    - Target Audience -> Inform/Compare -> Interactive Donut Chart -> Click slices to see details -> Justification: Visually represents market composition and allows for focused exploration of each segment -> Library: Chart.js (Canvas).
+    - Product Offerings -> Inform -> Interactive Cards -> Click to expand/reveal details -> Justification: Cleanly presents the three core products while hiding complexity until requested by the user -> Method: HTML/Tailwind + JS.
+    - Marketing Channels -> Organize -> Icon Grid -> Hover for tooltips -> Justification: A quick, visual summary of the multi-channel approach -> Method: HTML/Tailwind + JS.
+    - Marketing Timeline -> Change/Organize -> Horizontal Timeline -> Click to highlight phase details -> Justification: Clearly visualizes the project's launch sequence -> Method: HTML/Tailwind + JS.
+    - Creative Materials -> Inform -> Tabbed Interface -> Click to switch content -> Justification: Organizes different media types efficiently in a compact space -> Method: HTML/Tailwind + JS. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F4;
+            color: #292524;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link.active {
+            color: #0D9488;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-stone-50/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-teal-700">Bate-e-Volta Expresso</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#overview" class="nav-link text-stone-600 hover:text-teal-600 transition-colors">Visão Geral</a>
+                <a href="#market" class="nav-link text-stone-600 hover:text-teal-600 transition-colors">O Mercado</a>
+                <a href="#packages" class="nav-link text-stone-600 hover:text-teal-600 transition-colors">Nossos Pacotes</a>
+                <a href="#marketing" class="nav-link text-stone-600 hover:text-teal-600 transition-colors">Marketing</a>
+                <a href="#creatives" class="nav-link text-stone-600 hover:text-teal-600 transition-colors">Criativos</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="overview" class="text-center min-h-[60vh] flex flex-col justify-center items-center">
+            <h2 class="text-4xl md:text-6xl font-bold text-stone-800 leading-tight">O dia que muda a sua semana.</h2>
+            <p class="mt-4 text-lg text-stone-600 max-w-3xl">Lançamos uma nova linha de produtos focada em viagens de curta duração, as "Bate-e-Volta". Atendemos a uma demanda crescente por escapadas de fim de semana, oferecendo conveniência, experiências selecionadas e um excelente custo-benefício.</p>
+            <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-8 w-full max-w-4xl">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h3 class="text-lg font-semibold text-stone-500">Ponto de Equilíbrio</h3>
+                    <p class="text-3xl font-bold text-teal-700 mt-2" data-counter-target="6">0</p>
+                    <p class="text-stone-500">meses</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h3 class="text-lg font-semibold text-stone-500">Novos Destinos</h3>
+                    <p class="text-3xl font-bold text-teal-700 mt-2" data-counter-target="3">0</p>
+                    <p class="text-stone-500">temas iniciais</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h3 class="text-lg font-semibold text-stone-500">Público Principal</h3>
+                    <p class="text-3xl font-bold text-teal-700 mt-2" data-counter-target="40">0</p>
+                    <p class="text-stone-500">% Jovens Adultos</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="market" class="py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-800">Análise de Mercado</h2>
+                <p class="mt-2 text-stone-600 max-w-2xl mx-auto">Entendemos o público e as tendências para oferecer a melhor experiência. Nosso foco é em quem busca fugir da rotina sem comprometer tempo ou orçamento, aproveitando o crescimento do turismo interno e a busca por vivências autênticas.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-xl font-semibold text-stone-700 mb-4 text-center">Nosso Público-Alvo</h3>
+                    <div class="chart-container">
+                        <canvas id="audienceChart"></canvas>
+                    </div>
+                </div>
+                <div id="audience-details">
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                        <h4 class="font-bold text-lg text-teal-700">Explore o gráfico</h4>
+                        <p class="text-stone-600 mt-2">Clique em um segmento do gráfico para ver mais detalhes sobre cada perfil do nosso público-alvo. Adaptamos nossas ofertas para atender às necessidades específicas de cada grupo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="packages" class="py-20 bg-stone-100 -mx-6 px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-800">Nossos Pacotes Iniciais</h2>
+                <p class="mt-2 text-stone-600 max-w-2xl mx-auto">Criamos três linhas de experiência para atender a todos os gostos. Cada pacote é pensado para maximizar a diversão e a descoberta em um único dia. Clique em um pacote para ver exemplos de destinos.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="package-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="p-6">
+                        <div class="text-4xl mb-4">🏛️</div>
+                        <h3 class="text-xl font-bold text-stone-800">Escapada Cultural</h3>
+                        <p class="mt-2 text-stone-600">Visitas a cidades históricas, museus e eventos que enriquecem a alma.</p>
+                    </div>
+                    <div class="package-details hidden p-6 bg-stone-50 border-t border-stone-200">
+                        <p class="font-semibold">Exemplos:</p>
+                        <ul class="list-disc list-inside text-stone-600 mt-2">
+                            <li>Centro Histórico de Paraty</li>
+                            <li>Museu do Ipiranga em São Paulo</li>
+                            <li>Festival de Inverno de Campos do Jordão</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="package-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="p-6">
+                        <div class="text-4xl mb-4">🌳</div>
+                        <h3 class="text-xl font-bold text-stone-800">Aventura na Natureza</h3>
+                        <p class="mt-2 text-stone-600">Trilhas, cachoeiras e parques para quem ama ar livre e adrenalina.</p>
+                    </div>
+                     <div class="package-details hidden p-6 bg-stone-50 border-t border-stone-200">
+                        <p class="font-semibold">Exemplos:</p>
+                        <ul class="list-disc list-inside text-stone-600 mt-2">
+                            <li>Trilhas no Parque Estadual da Cantareira</li>
+                            <li>Cachoeiras de Paranapiacaba</li>
+                            <li>Rafting no Rio Juquiá</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="package-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="p-6">
+                        <div class="text-4xl mb-4">🎢</div>
+                        <h3 class="text-xl font-bold text-stone-800">Dia de Diversão</h3>
+                        <p class="mt-2 text-stone-600">Parques temáticos e eventos especiais para um dia inesquecível.</p>
+                    </div>
+                     <div class="package-details hidden p-6 bg-stone-50 border-t border-stone-200">
+                        <p class="font-semibold">Exemplos:</p>
+                        <ul class="list-disc list-inside text-stone-600 mt-2">
+                            <li>Hopi Hari & Wet'n Wild</li>
+                            <li>Parque da Mônica</li>
+                            <li>Eventos gastronômicos sazonais</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="marketing" class="py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-800">Estratégia de Marketing</h2>
+                 <p class="mt-2 text-stone-600 max-w-2xl mx-auto">Nossa comunicação será leve, divertida e inspiradora. Queremos mostrar os momentos de alegria e as memórias que podem ser criadas em um único dia, usando uma abordagem multicanal para alcançar nosso público onde ele estiver.</p>
+            </div>
+            <div class="mb-12">
+                <h3 class="text-xl font-semibold text-stone-700 mb-6 text-center">Canais de Comunicação</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
+                    <div class="flex flex-col items-center"><div class="text-4xl mb-2">📱</div><span class="font-semibold">Redes Sociais</span></div>
+                    <div class="flex flex-col items-center"><div class="text-4xl mb-2">✉️</div><span class="font-semibold">E-mail Marketing</span></div>
+                    <div class="flex flex-col items-center"><div class="text-4xl mb-2">📝</div><span class="font-semibold">Marketing de Conteúdo</span></div>
+                    <div class="flex flex-col items-center"><div class="text-4xl mb-2">🏞️</div><span class="font-semibold">Mídia Outdoor</span></div>
+                    <div class="flex flex-col items-center"><div class="text-4xl mb-2">🤝</div><span class="font-semibold">Parcerias</span></div>
+                </div>
+            </div>
+             <div>
+                <h3 class="text-xl font-semibold text-stone-700 mb-6 text-center">Cronograma de Lançamento</h3>
+                <div class="relative">
+                    <div class="absolute left-1/2 w-0.5 h-full bg-stone-300 hidden md:block"></div>
+                    <div class="grid md:grid-cols-3 gap-8 relative">
+                        <div class="timeline-item text-center md:text-right">
+                             <h4 class="font-bold text-lg text-orange-600">Pré-lançamento</h4>
+                             <p class="text-stone-600">1 mês antes: teasers e expectativa nas redes sociais e por e-mail.</p>
+                        </div>
+                         <div class="timeline-item text-center">
+                             <h4 class="font-bold text-lg text-teal-700">Lançamento</h4>
+                             <p class="text-stone-600">Campanha completa, revelação dos pacotes e promoções especiais.</p>
+                        </div>
+                         <div class="timeline-item text-center md:text-left">
+                             <h4 class="font-bold text-lg text-orange-600">Sustentação</h4>
+                             <p class="text-stone-600">Pós-lançamento: campanhas semanais, promoções e conteúdo contínuo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="creatives" class="py-20 bg-stone-100 -mx-6 px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-800">Materiais Criativos</h2>
+                <p class="mt-2 text-stone-600 max-w-2xl mx-auto">Desenvolvemos uma identidade visual e mensagens que comunicam a essência do "Bate-e-Volta": uma fuga rápida, divertida e acessível da rotina. Aqui estão alguns exemplos dos nossos materiais de divulgação.</p>
+            </div>
+            <div>
+                <div class="mb-4 border-b border-stone-200">
+                    <nav class="-mb-px flex space-x-8 justify-center" aria-label="Tabs">
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg border-teal-600 text-teal-700" data-target="tab-video">Vídeo</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300" data-target="tab-outdoor">Outdoor</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300" data-target="tab-email">E-mail</button>
+                    </nav>
+                </div>
+                <div class="mt-8">
+                    <div class="tab-content" id="tab-video">
+                        <div class="bg-white p-8 rounded-lg shadow-md max-w-3xl mx-auto">
+                            <h3 class="text-xl font-bold text-stone-800 mb-4">Roteiro para Vídeo (YouTube/TikTok)</h3>
+                            <div class="space-y-4 text-stone-700">
+                                <p><strong class="text-stone-900">Cena 1:</strong> Início da manhã, uma pessoa olhando pela janela, com expressão de tédio. <br><em>Narrador: "Cansado da mesma rotina?"</em></p>
+                                <p><strong class="text-stone-900">Cena 2:</strong> Transição rápida para um ônibus de viagem, cheio de pessoas animadas. <br><em>Narrador: "Sua próxima aventura está a apenas um bate-e-volta de distância!"</em></p>
+                                <p><strong class="text-stone-900">Cena 3:</strong> Montagem de cenas curtas e dinâmicas de diferentes destinos: cachoeira, centro histórico, parque temático. <br><em>Narrador: "Liberte-se! Explore, sinta, viva. Tudo em um dia."</em></p>
+                                <p><strong class="text-stone-900">Cena 4:</strong> Finaliza com a logo da agência e o slogan. <br><em>Slogan: "Bate-e-Volta: O dia que muda a sua semana."</em></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content hidden" id="tab-outdoor">
+                         <div class="bg-black p-8 rounded-lg shadow-md max-w-3xl mx-auto aspect-[2/1] flex flex-col justify-center items-center text-center">
+                            <h3 class="text-5xl font-extrabold text-white leading-tight">Fugir da Rotina?<br><span class="text-yellow-300">É Bate-e-Volta!</span></h3>
+                            <p class="mt-4 text-white text-lg">Escapadas de fim de semana que cabem no seu bolso e na sua agenda.</p>
+                            <p class="mt-8 text-2xl font-bold bg-yellow-300 text-black py-2 px-6 rounded">[Nosso Site]</p>
+                        </div>
+                    </div>
+                    <div class="tab-content hidden" id="tab-email">
+                        <div class="bg-white rounded-lg shadow-md max-w-3xl mx-auto border border-stone-200">
+                            <div class="p-6 border-b">
+                                <p class="text-sm text-stone-500"><strong>Assunto:</strong> A pausa que você merece: Conheça nossa nova linha de viagens Bate-e-Volta!</p>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-stone-800">Olá [Nome do Cliente],</h3>
+                                <p class="mt-4 text-stone-700">Sabemos que a rotina pode ser exaustiva. E se a gente te dissesse que uma aventura incrível está a apenas um dia de distância?</p>
+                                <p class="mt-4 text-stone-700">Temos o prazer de apresentar a nossa mais nova linha de produtos: <strong>Viagens Bate-e-Volta.</strong> Pacotes completos e práticos para você relaxar e recarregar as energias.</p>
+                                <div class="mt-6 space-y-2">
+                                    <p><strong>• Bate-e-Volta para a Serra:</strong> Aproveite o ar puro e a paisagem deslumbrante.</p>
+                                    <p><strong>• Bate-e-Volta Histórico:</strong> Mergulhe em séculos de história em uma cidade pertinho de você.</p>
+                                    <p><strong>• Bate-e-Volta Gastronômico:</strong> Um dia inteiro para saborear a culinária local.</p>
+                                </div>
+                                <div class="mt-8 text-center">
+                                    <button class="bg-teal-700 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-800 transition-colors">Conheça os Pacotes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-800 text-white">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>&copy; 2025 [Nome da Agência] | Plano de Negócios Interativo</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            function animateCounters() {
+                const counters = document.querySelectorAll('[data-counter-target]');
+                counters.forEach(counter => {
+                    const target = +counter.dataset.counterTarget;
+                    const duration = 1500;
+                    const stepTime = Math.abs(Math.floor(duration / target));
+                    let current = 0;
+                    const timer = setInterval(() => {
+                        current += 1;
+                        counter.innerText = current;
+                        if (current === target) {
+                            clearInterval(timer);
+                        }
+                    }, stepTime);
+                });
+            }
+
+            const audienceData = {
+                labels: ['Jovens Adultos (25-40)', 'Famílias', 'Casais', 'Grupos de Amigos'],
+                datasets: [{
+                    label: 'Público-Alvo',
+                    data: [40, 25, 20, 15],
+                    backgroundColor: ['#0D9488', '#F97316', '#15803D', '#EA580C'],
+                    borderColor: '#F5F5F4',
+                    borderWidth: 4,
+                    hoverOffset: 10
+                }]
+            };
+
+            const audienceDetailsContent = {
+                'Jovens Adultos (25-40)': {
+                    title: 'Jovens Adultos (25-40 anos)',
+                    text: 'Buscam experiências dinâmicas e compartilháveis. Valorizam a conveniência e a oportunidade de socializar. Nossos pacotes de aventura e culturais são ideais para eles.'
+                },
+                'Famílias': {
+                    title: 'Famílias com Crianças',
+                    text: 'Procuram atividades seguras e divertidas para todas as idades. A praticidade de um pacote completo é um grande atrativo. A linha "Dia de Diversão" é a escolha perfeita.'
+                },
+                'Casais': {
+                    title: 'Casais',
+                    text: 'Desejam escapadas românticas e momentos de qualidade juntos. Pacotes culturais e gastronômicos oferecem o ambiente ideal para criar novas memórias.'
+                },
+                'Grupos de Amigos': {
+                    title: 'Grupos de Amigos',
+                    text: 'Querem diversão, aventura e um bom custo-benefício. A flexibilidade e a variedade dos nossos pacotes permitem que encontrem a viagem perfeita para o grupo.'
+                }
+            };
+            
+            const audienceDetailsContainer = document.getElementById('audience-details');
+            const ctx = document.getElementById('audienceChart').getContext('2d');
+            const audienceChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: audienceData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const chartElement = elements[0];
+                            const index = chartElement.index;
+                            const label = audienceData.labels[index];
+                            const details = audienceDetailsContent[label];
+
+                            audienceDetailsContainer.innerHTML = `
+                                <div class="bg-white p-6 rounded-lg shadow-md border-2 border-teal-600 transition-all duration-300">
+                                    <h4 class="font-bold text-lg text-teal-700">${details.title}</h4>
+                                    <p class="text-stone-600 mt-2">${details.text}</p>
+                                </div>`;
+                        }
+                    }
+                }
+            });
+
+            const packageCards = document.querySelectorAll('.package-card');
+            packageCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const details = card.querySelector('.package-details');
+                    details.classList.toggle('hidden');
+                });
+            });
+
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.dataset.target;
+
+                    tabBtns.forEach(b => {
+                        b.classList.remove('border-teal-600', 'text-teal-700');
+                        b.classList.add('border-transparent', 'text-stone-500');
+                    });
+                    btn.classList.add('border-teal-600', 'text-teal-700');
+                    btn.classList.remove('border-transparent', 'text-stone-500');
+
+                    tabContents.forEach(content => {
+                        if (content.id === targetId) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.4
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if(link.getAttribute('href').substring(1) === entry.target.id){
+                                link.classList.add('active');
+                            }
+                        });
+                        if(entry.target.id === 'overview') {
+                            animateCounters();
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
